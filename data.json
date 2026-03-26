@@ -1,0 +1,121 @@
+{
+  "services": [
+    {
+      "type": "Health",
+      "name_fr": "Médecins du Monde",
+      "name_en": "Doctors of the World",
+      "name_ar": "أطباء العالم",
+      "desc_fr": "Consultations gratuites pour les personnes migrantes.",
+      "desc_en": "Free medical consultations for migrants.",
+      "desc_ar": "استشارات طبية مجانية للمهاجرين.",
+      "address": "Calais Centre",
+      "lat": 50.9519,
+      "lng": 1.8526,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Calais+Centre"
+    },
+    {
+      "type": "Food",
+      "name_fr": "La Vie Active – Distribution de repas",
+      "name_en": "La Vie Active – Meal Distribution",
+      "name_ar": "لا في أكتيف – توزيع الوجبات",
+      "desc_fr": "Repas chauds gratuits chaque jour.",
+      "desc_en": "Free hot meals served daily.",
+      "desc_ar": "وجبات ساخنة مجانية يوميًا.",
+      "address": "Sites de distribution, Calais",
+      "lat": 50.9635,
+      "lng": 1.895,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Calais"
+    },
+    {
+      "type": "Shelter",
+      "name_fr": "Secours Catholique – Accueil de jour",
+      "name_en": "Secours Catholique – Day Center",
+      "name_ar": "سكور كاتوليك – مركز نهاري",
+      "desc_fr": "Accueil de jour, douches, accompagnement social.",
+      "desc_en": "Day services, showers, social support.",
+      "desc_ar": "خدمات نهارية، حمّامات، دعم اجتماعي.",
+      "address": "Rue de Moscou, Calais",
+      "lat": 50.9487,
+      "lng": 1.8552,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Rue+de+Moscou+Calais"
+    },
+    {
+      "type": "Legal",
+      "name_fr": "Refugee Info Bus",
+      "name_en": "Refugee Info Bus",
+      "name_ar": "حافلة معلومات اللاجئين",
+      "desc_fr": "Infos, traduction et conseils juridiques.",
+      "desc_en": "Information, translation and legal advice.",
+      "desc_ar": "معلومات، ترجمة ونصائح قانونية.",
+      "address": "Zones d’intervention, Calais",
+      "lat": 50.9561,
+      "lng": 1.858,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Calais"
+    },
+    {
+      "type": "Hygiene",
+      "name_fr": "Douches publiques – Calais",
+      "name_en": "Public showers – Calais",
+      "name_ar": "حمّامات عامة – كاليه",
+      "desc_fr": "Accès aux douches selon créneaux des associations.",
+      "desc_en": "Shower access at association time slots.",
+      "desc_ar": "إمكانية الاستحمام وفق مواعيد الجمعيات.",
+      "address": "Calais (selon planning)",
+      "lat": 50.9552,
+      "lng": 1.8589,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Calais+showers"
+    },
+    {
+      "type": "Health",
+      "name_fr": "PASS – Hôpital de Dunkerque",
+      "name_en": "PASS – Dunkirk Hospital",
+      "name_ar": "خدمة الوصول للرعاية – مستشفى دنكيرك",
+      "desc_fr": "Accès aux soins pour personnes sans couverture.",
+      "desc_en": "Healthcare access for people without coverage.",
+      "desc_ar": "رعاية صحية لمن لا يملكون تغطية.",
+      "address": "Dunkerque",
+      "lat": 51.0348,
+      "lng": 2.3768,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Centre+Hospitalier+Dunkerque"
+    },
+    {
+      "type": "Food",
+      "name_fr": "Distributions alimentaires – Grande-Synthe",
+      "name_en": "Food distributions – Grande-Synthe",
+      "name_ar": "توزيع الطعام – غراند سانت",
+      "desc_fr": "Distributions régulières par les associations.",
+      "desc_en": "Regular distributions by local NGOs.",
+      "desc_ar": "توزيعات منتظمة من قبل الجمعيات.",
+      "address": "Grande-Synthe",
+      "lat": 51.0134,
+      "lng": 2.312,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Grande-Synthe"
+    },
+    {
+      "type": "Legal",
+      "name_fr": "La Cimade – Conseil juridique",
+      "name_en": "La Cimade – Legal counselling",
+      "name_ar": "لا سيماد – استشارات قانونية",
+      "desc_fr": "Information juridique pour demandeurs d’asile et réfugiés.",
+      "desc_en": "Legal information for asylum-seekers and refugees.",
+      "desc_ar": "معلومات قانونية لطالبي اللجوء واللاجئين.",
+      "address": "Dunkerque",
+      "lat": 51.0355,
+      "lng": 2.374,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Dunkerque+La+Cimade"
+    },
+    {
+      "type": "Shelter",
+      "name_fr": "Accueil de jour – Dunkerque",
+      "name_en": "Day center – Dunkirk",
+      "name_ar": "مركز نهاري – دنكيرك",
+      "desc_fr": "Accueil, orientation, accès aux services.",
+      "desc_en": "Reception, orientation, access to services.",
+      "desc_ar": "استقبال، توجيه، وصول إلى الخدمات.",
+      "address": "Dunkerque",
+      "lat": 51.037,
+      "lng": 2.3765,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Dunkerque+centre"
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kobo Info</title>
+  <meta name="theme-color" content="#0072CE" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" />
+
+  <!-- Leaflet (no API key) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    :root{
+      --brand:#0072CE; --bg:#f6f8fb; --fg:#0f172a; --card:#ffffff;
+      --muted:#5b6b84; --border:rgba(15,23,42,.10); --chip:#E6F0FA; --link:#0072CE;
+    }
+    .dark{
+      --bg:#0b1b2b; --fg:#e7edf6; --card:#0f2438; --muted:#9fb3c9;
+      --border:rgba(255,255,255,.14); --chip:#0f3150; --link:#7ec4ff;
+    }
+
+    html,body{margin:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+    .rtl{direction:rtl}
+    a.link{color:var(--link);text-decoration:underline}
+    .hidden{display:none}
+
+    /* Top bar */
+    .topbar{position:sticky;top:0;z-index:20;background:#0072CE;color:#fff}
+    .topbar .in{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 12px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand img{width:32px;height:32px;border-radius:6px}
+    .brand strong{font-weight:700}
+    .grow{flex:1}
+    .select,.btn{border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.14);color:#fff}
+    .select{padding:6px 8px}
+    .btn{padding:6px 10px;cursor:pointer}
+
+    /* Tabs row */
+    .nav-top{position:sticky;top:56px;z-index:9;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);border-bottom:1px solid var(--border)}
+    .dark .nav-top{background:rgba(11,27,43,.60)}
+    .nav-row{max-width:980px;margin:0 auto;display:flex;gap:8px;overflow:auto;padding:8px 12px}
+    .nav-link{
+      text-decoration:none;border:1px solid var(--border);background:var(--card);color:inherit;
+      border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:6px;white-space:nowrap
+    }
+    .nav-link.active{border-color:var(--brand);box-shadow:0 0 0 2px rgba(0,114,206,.15)}
+
+    /* Layout */
+    .app{max-width:980px;margin:0 auto;padding:12px 12px 96px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px}
+    .muted{color:var(--muted)}
+    .grid{display:grid;gap:12px}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .filters{display:grid;gap:8px;grid-template-columns:repeat(3,1fr)}
+    @media(min-width:640px){.filters{grid-template-columns:repeat(6,1fr)}}
+    .filter-btn{border:1px solid var(--border);background:var(--card);border-radius:10px;padding:8px;cursor:pointer}
+    .filter-btn.active{border-color:var(--brand);color:var(--brand);background:var(--chip)}
+    .title{font-weight:700;margin:0 0 8px}
+    .input{width:100%;border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--card);color:var(--fg)}
+    .service{display:flex;gap:12px}
+
+    .ic{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--chip);color:#0072CE;font-weight:700}
+    .badge{font-size:12px;border-radius:999px;padding:2px 8px;background:var(--chip);color:#0072CE;border:1px solid transparent}
+
+    /* Dark overrides */
+    html.dark .card .badge{background:#1b3a58 !important;color:#ffffff !important;border:1px solid rgba(255,255,255,0.18) !important;box-shadow:inset 0 -2px 0 #0072CE !important}
+    html.dark .card h3, html.dark #servicesSection h3, html.dark .service h3{color:#ffffff !important}
+    html.dark .filter-btn.active{color:#ffffff !important;background:#1b3a58 !important;border-color:#0072CE !important;box-shadow:inset 0 -2px 0 #0072CE !important}
+    html.dark .ic{background:#1b3a58 !important;color:#ffffff !important}
+
+    /* Selected (highlight) */
+    .card.selectable{cursor:pointer;transition: box-shadow .15s, border-color .15s, background .2s}
+    .card.selectable.selected{border-color:#0072CE !important;box-shadow:0 0 0 3px rgba(0,114,206,.22);background:linear-gradient(0deg, rgba(0,114,206,.06), rgba(0,114,206,.06)), var(--card)}
+    html.dark .card.selectable.selected{background:linear-gradient(0deg, rgba(0,114,206,.12), rgba(0,114,206,.12)), var(--card)}
+
+    /* Map */
+    #leafletMap{width:100%;height:68vh;border-radius:12px;border:1px solid var(--border)}
+    .leaflet-container{background:#d9e3ef}
+  </style>
+
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="topbar">
+    <div class="in">
+      <div class="brand">
+        <img src="icons/unhcr.png" alt="UNHCR" />
+        <strong>Kobo Info</strong>
+      </div>
+      <div class="grow"></div>
+      <select id="lang" class="select" aria-label="Language">
+        <option value="fr">FR</option>
+        <option value="en">EN</option>
+        <option value="ar">AR</option>
+      </select>
+      <button id="darkToggle" class="btn" title="Dark / Light">☾</button>
+    </div>
+  </div>
+
+  <div class="nav-top">
+    <div class="nav-row" id="tabs" role="tablist" aria-label="Sections">
+      <a class="nav-link" href="#/services" data-section="services" role="tab">🧭 <span data-i="tab_services">Services</span></a>
+      <a class="nav-link" href="#/map" data-section="map" role="tab">🗺️ <span data-i="tab_map">Carte</span></a>
+      <a class="nav-link" href="#/urgent" data-section="urgent" role="tab">🚨 <span data-i="tab_urgent">Urgences</span></a>
+      <a class="nav-link" href="#/asylum" data-section="asylum" role="tab">📝 <span data-i="tab_asylum">Asile</span></a>
+      <a class="nav-link" href="#/legal" data-section="legal" role="tab">⚖️ <span data-i="tab_legal">Juridique</span></a>
+      <a class="nav-link" href="#/info" data-section="info" role="tab">ℹ️ <span data-i="tab_info">Infos</span></a>
+      <a class="nav-link" href="#/prevention" data-section="prevention" role="tab">⚠️ <span data-i="tab_prevention">Prévention des risques</span></a>
+    </div>
+  </div>
+
+  <main class="app">
+    <section id="servicesSection" class="grid" data-page="services">
+      <div class="card">
+        <input id="search" class="input" placeholder="Rechercher un service…" />
+        <div id="filters" class="filters" style="margin-top:10px"></div>
+      </div>
+      <div id="services" class="grid grid-2"></div>
+      <div id="noResults" class="hidden muted" style="text-align:center;font-style:italic">Aucun résultat.</div>
+    </section>
+
+    <section id="mapSection" class="card hidden" data-page="map">
+      <h2 class="title" data-i="map_title">Carte — Calais & Dunkerque</h2>
+      <div id="leafletMap" aria-label="Carte des services"></div>
+      <div class="muted" style="margin-top:8px" data-i="map_hint">
+        Conseil : touchez un pin pour ouvrir l’itinéraire (Google Maps).
+      </div>
+    </section>
+
+    <section id="urgentSection" class="card hidden" data-page="urgent">
+      <h2 class="title" data-i="urgent_title">Numéros d’urgence en France</h2>
+      <ul id="urgentList" style="margin-left:1rem"></ul>
+    </section>
+
+    <section id="asylumSection" class="card hidden" data-page="asylum">
+      <h2 class="title" data-i="asylum_title">Procédure d’asile : étapes clés</h2>
+      <ul id="asylumContent" style="margin-left:1rem"></ul>
+    </section>
+
+    <section id="legalSection" class="card hidden" data-page="legal">
+      <h2 class="title" data-i="legal_title">Informations juridiques</h2>
+      <ul id="legalContent" style="margin-left:1rem"></ul>
+    </section>
+
+    <section id="infoSection" class="card hidden" data-page="info">
+      <h2 class="title" data-i="info_title">Infos utiles</h2>
+      <ul id="infoList" style="margin-left:1rem"></ul>
+    </section>
+
+    <section id="preventionSection" class="card hidden" data-page="prevention">
+      <h2 class="title" data-i="prevention_title">Prévention des risques</h2>
+      <ul id="preventionList" style="margin-left:1rem"></ul>
+    </section>
+  </main>
+</body>
+</html>

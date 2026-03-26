@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Kobo Info – Test</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 0; }
+    header { background:#005DAA; color:#fff; padding:12px 16px; display:flex; align-items:center; gap:10px; }
+    header img { height:24px }
+    main { padding:16px }
+    .card { border:1px solid #ddd; border-radius:12px; padding:12px; margin:10px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="icons/unhcr.png" alt="UNHCR">
+    <h1 style="margin:0;font-size:18px">Kobo Info (Test)</h1>
+  </header>
+  <main>
+    <div id="status" class="card">Initialising…</div>
+    <div id="list"></div>
+  </main>
+
+  <script>
+    // Minimal sanity-test script (no external files)
+    const services = [
+      { city:"Calais", type:"Santé", name:"Médecins du Monde", desc:"Consultations gratuites." },
+      { city:"Dunkerque", type:"Alimentation", name:"Distribution repas", desc:"Repas chauds quotidiens." }
+    ];
+    const status = document.getElementById('status');
+    const list = document.getElementById('list');
+
+    function render() {
+      status.textContent = "JS loaded and running ✅";
+      list.innerHTML = '';
+      services.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `<b>${s.name}</b> — ${s.type} (${s.city})<br><small>${s.desc}</small>`;
+        list.appendChild(div);
+      });
+    }
+
+    // If this runs, you’ll see cards. If not, JS isn’t executing at all.
+    render();
+  </script>
+</body>
+</html>
